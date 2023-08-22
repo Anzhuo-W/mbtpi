@@ -18,53 +18,63 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-
 from urls import MBTA_API_KEY
+from errors import BadRequestError, ForbiddenError, NotFoundError, NotAcceptableError, TooManyRequestsError
+from os import environ
+from dotenv import load_dotenv
+
+load_dotenv()
+OK = int(environ.get('OK'))
+BAD_REQUEST = int(environ.get('BAD_REQUEST'))
+FORBIDDEN = int(environ.get('FORBIDDEN'))
+NOT_FOUND = int(environ.get('NOT_FOUND'))
+NOT_ACCEPTABLE = int(environ.get('NOT_ACCEPTABLE'))
+TOO_MANY_REQUESTS = int(environ.get('TOO_MANY_REQUESTS'))
 
 
 def set_params(session,
                page_offset: int = None,
                page_limit: int = None,
                sort: str = None,
-               fields_alert: str = None,
-               fields_facility: str = None,
-               fields_line: str = None,
-               fields_prediction: str = None,
-               fields_route: str = None,
-               fields_route_pattern: str = None,
-               fields_schedule: str = None,
-               fields_service: str = None,
-               fields_shape: str = None,
-               fields_stop: str = None,
-               fields_trip: str = None,
-               fields_vehicle: str = None,
-               include: str = None,
-               activity: str = None,
-               route_type: str = None,
+               fields_alert: list[str] | str = None,
+               fields_facility: list[str] | str = None,
+               fields_line: list[str] | str = None,
+               fields_prediction: list[str] | str = None,
+               fields_route: list[str] | str = None,
+               fields_route_pattern: list[str] | str = None,
+               fields_schedule: list[str] | str = None,
+               fields_service: list[str] | str = None,
+               fields_shape: list[str] | str = None,
+               fields_stop: list[str] | str = None,
+               fields_trip: list[str] | str = None,
+               fields_vehicle: list[str] | str = None,
+               include: list[str] = None,
+               activity: list[str] | str = None,
+               route_type: list[str] | str = None,
                direction_id: str = None,
-               route: str = None,
-               stop: str = None,
-               trip: str = None,
-               facility: str = None,
-               filter_id: str = None,
-               banner: str = None,
+               route: list[str] | str = None,
+               stop: list[str] | str = None,
+               trip: list[str] | str = None,
+               facility: list[str] | str = None,
+               filter_id: list[str] | str = None,
+               banner: bool = None,
                datetime: str = None,
-               lifecycle: str = None,
-               severity: str = None,
+               lifecycle: list[str] = None,
+               severity: list[str] = None,
                facility_type: str = None,
                latitude: str = None,
                longitude: str = None,
                radius: str = None,
-               route_pattern: str = None,
+               route_pattern: list[str] | str = None,
                date: str = None,
-               canonical: str = None,
+               canonical: bool = None,
                min_time: str = None,
                max_time: str = None,
                stop_sequence: str = None,
-               service: str = None,
-               location_type: str = None,
-               name: str = None,
-               label: str = None):
+               service: list[str] | str = None,
+               location_type: list[str] | str = None,
+               name: list[str] | str = None,
+               label: list[str] | str = None):
     """Adds params to the session passed in. Supports all parameters for any endpoint of the MBTA API
     listed at https://api-v3.mbta.com/docs/swagger/index.html."""
 
@@ -166,6 +176,25 @@ def set_params(session,
 
 
 def get(session, path):
-    """Makes a request to the given path with the given session. Returns response in a JSON format"""
+    """Makes a request to the given path with the given session. Returns response in a JSON format if request is valid.
+    Otherwise, raises an error."""
     response = session.get(path)
-    return response.json()
+    status = response.status_code
+
+    if status == OK:
+        return response.json()
+    else:
+        error = response.json()["errors"][0]
+
+        if status == BAD_REQUEST:
+            raise BadRequestError(error)
+        elif status == FORBIDDEN:
+            raise ForbiddenError(error)
+        elif status == NOT_FOUND:
+            raise NotFoundError(error)
+        elif status == NOT_ACCEPTABLE:
+            raise NotAcceptableError(error)
+        elif status == TOO_MANY_REQUESTS:
+            raise TooManyRequestsError(error)
+        else:
+            raise RuntimeError
