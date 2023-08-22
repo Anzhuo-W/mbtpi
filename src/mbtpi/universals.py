@@ -198,3 +198,4 @@ def get(session, path):
             raise TooManyRequestsError(error)
         else:
             raise RuntimeError
+# swap for match case
