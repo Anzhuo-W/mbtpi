@@ -19,8 +19,8 @@
 # SOFTWARE.
 
 
-import os
 import requests
+from os import environ
 from dotenv import load_dotenv
 
 
@@ -58,7 +58,7 @@ class URLs:
         """List Escalators and Elevators"""
         return self.__base_url + self.__facilities
 
-    def facility_by_id_url(self, facility_id: int):
+    def facility_by_id_url(self, facility_id: str):
         """Specific Escalator or Elevator"""
         return self.facility_url() + str(facility_id)
 
@@ -66,7 +66,7 @@ class URLs:
         """List of lines. A line is a combination of routes."""
         return self.__base_url + self.__lines
 
-    def line_by_id_url(self, line_id: id):
+    def line_by_id_url(self, line_id: str):
         """Single line, which represents a combination of routes."""
         return self.line_url() + str(line_id)
 
@@ -137,7 +137,7 @@ class URLs:
 
     def trip_by_id_url(self, trip_id: int):
         """Single trip - the journey of a particular vehicle through a set of stops"""
-        return self.trip_url() + str(trip_id)
+        return self.__base_url + self.__trips + str(trip_id)
 
     def vehicle_url(self):
         """List of vehicles (buses, ferries, and trains)"""
@@ -149,7 +149,7 @@ class URLs:
 
 
 load_dotenv()
-MBTA_API_KEY = os.environ.get('MBTA_API_KEY', "No api key set")
+MBTA_API_KEY = environ.get('MBTA_API_KEY', "No api key set")
 
 session = requests.Session()
 session.params = {}
