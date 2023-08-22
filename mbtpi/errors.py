@@ -26,13 +26,14 @@ class BadRequestError(Exception):
     def __init__(self, json):
         """Stores each value returned from the API as a field"""
         self.status = json["status"]
-        self.source = json["source"]["parameter"]
+        if "source" in json:
+            self.source = json["source"]["parameter"]
         self.detail = json["detail"]
         self.code = json["code"]
 
     def __str__(self):
         """Returns the error's status code and a summary of the problem"""
-        return self.status + " " + self.detail + ": " + self.source
+        return self.status + ": " + self.detail
 
 
 class NotAcceptableError(Exception):
