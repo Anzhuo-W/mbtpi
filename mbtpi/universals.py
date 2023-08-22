@@ -163,3 +163,9 @@ def set_params(session,
         session.params["filter[label]"] = label
 
     return session
+
+
+def get(session, path):
+    """Makes a request to the given path with the given session. Returns response in a JSON format"""
+    response = session.get(path)
+    return response.json()
