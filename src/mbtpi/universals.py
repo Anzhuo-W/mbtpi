@@ -197,5 +197,4 @@ def get(session, path):
         elif status == TOO_MANY_REQUESTS:
             raise TooManyRequestsError(error)
         else:
-            raise RuntimeError
-# swap for match case
+            raise RuntimeError("Invalid request")
