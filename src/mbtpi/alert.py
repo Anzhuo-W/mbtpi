@@ -115,8 +115,7 @@ def alert_by_id(alert_id: int, fields_alert: list[str] | str = None, include: li
 
 
 def all_alerts(json: bool = False):
-    """Makes a request to the API. Default behavior returns unsorted list of ALERT objects containing all alerts from
-    API, passing no optional parameters.
+    """Makes a request to the API. Default behavior returns unsorted list of ALERT objects containing all alerts from API, passing no optional parameters.
 
     :param json: return JSON instead of ALERT objects
     """

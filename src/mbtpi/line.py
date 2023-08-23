@@ -86,8 +86,7 @@ def line_by_id(line_id: int, fields_line: list[str] | str = None, include: list[
 
 
 def all_lines(json: bool = False):
-    """Makes a request to the API. Default behavior returns unsorted list of LINE objects containing all lines from
-    API, passing no optional parameters.
+    """Makes a request to the API. Default behavior returns unsorted list of LINE objects containing all lines from API, passing no optional parameters.
 
     :param json: return JSON instead of LINE objects
     """

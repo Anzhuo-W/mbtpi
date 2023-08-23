@@ -91,8 +91,7 @@ def facility_by_id(facility_id: str, fields_facility: list[str] | str = None, in
 
 
 def all_facilities(json: bool = False):
-    """Makes a request to the API. Default behavior returns unsorted list of FACILITY objects containing all facilities
-    from API, passing no optional parameters.
+    """Makes a request to the API. Default behavior returns unsorted list of FACILITY objects containing all facilities from API, passing no optional parameters.
 
     :param json: return JSON instead of FACILITY objects
     """
