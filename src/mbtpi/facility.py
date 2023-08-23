@@ -52,7 +52,7 @@ class FACILITY(object):
 
 def facilities(page_offset: int = None, page_limit: int = None, sort: str = None,
                fields_facility: list[str] | str = None, include: list[str] = None,
-               stop: list[str] | str = None, facility_type: list[str] | str = None, json: bool = False):
+               stop: list[str] | str = None, type: list[str] | str = None, json: bool = False):
     """Makes a request to the API.
     Default behavior returns unsorted list of FACILITY objects containing all facilities from API.
     Accepts all parameters that can be passed to the /facilities endpoint.
@@ -60,8 +60,7 @@ def facilities(page_offset: int = None, page_limit: int = None, sort: str = None
     :param json: return JSON instead of FACILITY object
     """
     facility_session = set_params(session, page_offset=page_offset, page_limit=page_limit, sort=sort,
-                                  fields_facility=fields_facility, include=include, stop=stop,
-                                  facility_type=facility_type)
+                                  fields_facility=fields_facility, include=include, stop=stop, type=type)
     json_response = get(facility_session, urls.facility_url())
 
     if json:

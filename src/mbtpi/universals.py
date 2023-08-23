@@ -61,7 +61,7 @@ def set_params(session,
                datetime: str = None,
                lifecycle: list[str] = None,
                severity: list[str] = None,
-               facility_type: str = None,
+               type: list[str] | str = None,
                latitude: str = None,
                longitude: str = None,
                radius: str = None,
@@ -140,8 +140,8 @@ def set_params(session,
         session.params["filter[lifecycle]"] = lifecycle
     if severity:
         session.params["filter[severity]"] = severity
-    if facility_type:
-        session.params["filter[type]"] = facility_type
+    if type:
+        session.params["filter[type]"] = type
     if latitude:
         session.params["filter[latitude]"] = latitude
     if longitude:
