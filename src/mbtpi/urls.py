@@ -78,16 +78,16 @@ class URLs:
         """List live parking data for specific parking facility"""
         return self.live_facility_url() + str(live_facility_id)
 
-    def predictions_url(self, predictions_filter: str):
+    def predictions_url(self):
         """List of predictions for trips. To get the scheduled times instead of the predictions, use /schedules.
         A filter must be present for any predictions to be returned"""
-        return self.__base_url + self.__predictions + predictions_filter
+        return self.__base_url + self.__predictions
 
     def route_url(self):
         """List of routes."""
         return self.__base_url + self.__routes
 
-    def route_by_id_url(self, route_id: int):
+    def route_by_id_url(self, route_id: str):
         """Show a particular route by the route’s id."""
         return self.route_url() + str(route_id)
 
@@ -96,54 +96,54 @@ class URLs:
         representing different possible patterns of where trips may serve."""
         return self.__base_url + self.__route_patterns
 
-    def route_pattern_by_id(self, route_pattern_id: int):
+    def route_pattern_by_id(self, route_pattern_id: str):
         """Show a particular route_pattern by the route’s id."""
         return self.route_pattern_url() + str(route_pattern_id)
 
-    def schedules_url(self, schedule_filter: str):
+    def schedules_url(self):
         """List of schedules. To get a realtime prediction instead of the scheduled times, use /predictions.
-        A filter must be present for any schedules to be returned"""
-        return self.__base_url + self.__schedules + schedule_filter
+        A route, stop, or trip filter must be present for any schedules to be returned"""
+        return self.__base_url + self.__schedules
 
     def service_url(self):
         """List of services. Service represents the days of the week, as well as extra days, that a trip is valid."""
         return self.__base_url + self.__services
 
-    def service_by_id_url(self, service_id: int):
+    def service_by_id_url(self, service_id: str):
         """Single service, which represents the days of the week, as well as extra days, that a trip is valid."""
         return self.service_url() + str(service_id)
 
-    def shape_url(self, route_filter: str):
+    def shape_url(self):
         """List of shapes. A route filter must be present for any shapes to be returned"""
-        return self.__base_url + self.__shapes + route_filter
+        return self.__base_url + self.__shapes
 
-    def shape_by_id_url(self, shape_id: int):
+    def shape_by_id_url(self, shape_id: str):
         """Detail of a particular shape."""
-        return self.__base_url + self.__shapes + str(shape_id)
+        return self.shape_url() + str(shape_id)
 
     def stop_url(self):
         """List stops."""
         return self.__base_url + self.__stops
 
-    def stop_by_id_url(self, stop_id: int):
+    def stop_by_id_url(self, stop_id: str):
         """Detail for a specific stop."""
         return self.stop_url() + str(stop_id)
 
-    def trip_url(self, trip_filter: str):
+    def trip_url(self):
         """List of trips, the journies of a particular vehicle through a set of stops on a primary route and zero or
         more alternative routes that can be filtered on. An id, route, route_pattern, or name filter must be present for
         any trips to be returned."""
-        return self.__base_url + self.__trips + trip_filter
+        return self.__base_url + self.__trips
 
-    def trip_by_id_url(self, trip_id: int):
+    def trip_by_id_url(self, trip_id: str):
         """Single trip - the journey of a particular vehicle through a set of stops"""
-        return self.__base_url + self.__trips + str(trip_id)
+        return self.trip_url() + str(trip_id)
 
     def vehicle_url(self):
         """List of vehicles (buses, ferries, and trains)"""
         return self.__base_url + self.__vehicles
 
-    def vehicle_by_id_url(self, vehicle_id: int):
+    def vehicle_by_id_url(self, vehicle_id: str):
         """Single vehicle (bus, ferry, or train)"""
         return self.vehicle_url() + str(vehicle_id)
 
