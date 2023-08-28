@@ -24,7 +24,7 @@ from universals import set_params, get
 
 
 class LINE(object):
-    """Represents a MBTA line. Takes in json with 'id', 'links', 'type' keys, and 'attributes' list"""
+    """Represents a MBTA line. Takes in json with 'id', 'links', 'type' keys, 'relationships' and 'attributes' dicts"""
 
     def __init__(self, json):
         """Stores each value returned from the MBTA API as a field"""
@@ -32,11 +32,19 @@ class LINE(object):
         self.links = json["links"]
         self.type = json["type"]
 
+        if "relationships" in json:
+            self.__set_relationships(json["relationships"])
+
         self.__set_attributes(json["attributes"])
 
     def __str__(self):
         """Returns the id and long name of the line"""
         return self.id + ": " + self.long_name
+
+    def __set_relationships(self, json):
+        """Sets each given relationship"""
+        if "routes" in json:
+            self.routes = json["routes"]["data"]["id"]
 
     def __set_attributes(self, json):
         """Sets each given attribute of the line"""

@@ -31,13 +31,28 @@ class STOP(object):
         self.type = json["type"]
         self.id = json["id"]
         self.links = json["links"]
-        self.relationships = json["relationships"]
+
+        if "relationships" in json:
+            self.__set_relationships(json["relationships"])
 
         self.__set_attributes(json["attributes"])
 
     def __str__(self):
         """Returns the id and name of the stop, and a line/route description"""
         return self.id + ": " + self.name + " " + self.description
+
+    def __set_relationships(self, json):
+        """Sets each given relationship"""
+        if "child_stops" in json:
+            self.child_stops = json["child_stops"]["data"]
+        if "connecting_stops" in json:
+            self.connecting_stops = json["connecting_stops"]["data"]
+        if "facilities" in json:
+            self.facilities = json["facilities"]["data"]
+        if "parent_station" in json:
+            self.route = json["parent_station"]["data"]["id"]
+        if "route" in json:
+            self.route = json["route"]["data"]["id"]
 
     def __set_attributes(self, json):
         """Sets each given attribute of the stop"""
@@ -102,8 +117,8 @@ def stop_by_id(stop_id: str, fields_stop: list[str] | str = None, include: list[
     Default behavior returns a STOP object with the id given.
     Accepts all parameters that can be passed to the /stops/{id} endpoint.
 
-    :param stop_id: id of shape to return
-    :param json: return JSON instead of SERVICE object
+    :param stop_id: id of stop to return
+    :param json: return JSON instead of STOP object
     """
     stop_session = set_params(session, fields_stop=fields_stop, include=include)
     json_response = get(stop_session, urls.stop_by_id_url(stop_id))
@@ -115,7 +130,7 @@ def stop_by_id(stop_id: str, fields_stop: list[str] | str = None, include: list[
 
 
 def all_stops(json: bool = False):
-    """Makes a request to the API. Default behavior returns unsorted list of STOP objects containing all lines from API, passing no optional parameters.
+    """Makes a request to the API. Default behavior returns unsorted list of STOP objects containing all stops from API, passing no optional parameters.
 
     :param json: return JSON instead of STOP objects
     """

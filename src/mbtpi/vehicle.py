@@ -42,6 +42,7 @@ class VEHICLE(object):
         return self.id + ": " + self.label
 
     def __set_relationships(self, json):
+        """Sets each given relationship"""
         if "route" in json:
             self.route = json["route"]["data"]["id"]
         if "stop" in json:

@@ -29,15 +29,26 @@ class ROUTE(object):
     def __init__(self, json):
         """Stores each value returned from the MBTA API as a field"""
         self.type = json["type"]
-        self.relationships = json["relationships"]
         self.links = json["links"]
         self.id = json["id"]
+
+        if "relationships" in json:
+            self.__set_relationships(json["relationships"])
 
         self.__set_attributes(json["attributes"])
 
     def __str__(self):
         """Returns the id and long name of the route"""
         return self.id + ": " + self.long_name
+
+    def __set_relationships(self, json):
+        """Sets each given relationship"""
+        if "stop" in json:
+            self.stop = json["stop"]["data"]["id"]
+        if "line" in json:
+            self.line = json["line"]["data"]["id"]
+        if "route_patterns" in json:
+            self.route_patterns = json["route_patterns"]["data"]
 
     def __set_attributes(self, json):
         """Sets each given attribute of the route"""

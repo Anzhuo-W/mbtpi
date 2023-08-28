@@ -30,10 +30,11 @@ class SERVICE(object):
     def __init__(self, json):
         """Stores each value returned from the MBTA API as a field"""
         self.type = json["type"]
-        if "relationships" in json:
-            self.relationships = json["relationships"]
         self.links = json["links"]
         self.id = json["id"]
+
+        if "relationships" in json:
+            self.relationships = json["relationships"]
 
         self.__set_attributes(json["attributes"])
 

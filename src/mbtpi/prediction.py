@@ -24,14 +24,16 @@ from universals import set_params, get
 
 
 class PREDICTION(object):
-    """Represents a MBTA prediction. Takes in json with 'id', 'type' keys, 'relationships' and 'attributes' dict"""
+    """Represents a MBTA prediction. Takes in json with 'id', 'type' keys, 'relationships' and 'attributes' dicts"""
 
     def __init__(self, json):
         """Stores each value returned from the MBTA API as a field"""
         self.type = json["type"]
         self.id = json["id"]
 
-        self.__set_relationships(json["relationships"])
+        if "relationships" in json:
+            self.__set_relationships(json["relationships"])
+
         self.__set_attributes(json["attributes"])
 
     def __str__(self):
@@ -39,6 +41,7 @@ class PREDICTION(object):
         return self.id + ": " + self.route
 
     def __set_relationships(self, json):
+        """Sets each given relationship"""
         if "vehicle" in json:
             self.vehicle = json["vehicle"]["data"]["id"]
         if "trip" in json:
@@ -50,7 +53,7 @@ class PREDICTION(object):
         if "route" in json:
             self.route = json["route"]["data"]["id"]
         if "alerts" in json:
-            self.alerts = json["alerts"]["data"]["id"]
+            self.alerts = json["alerts"]["data"]
 
     def __set_attributes(self, json):
         """Sets each given attribute of the prediction"""

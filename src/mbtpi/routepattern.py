@@ -30,15 +30,24 @@ class ROUTE_PATTERN(object):
     def __init__(self, json):
         """Stores each value returned from the MBTA API as a field"""
         self.type = json["type"]
-        self.relationships = json["relationships"]
         self.links = json["links"]
         self.id = json["id"]
+
+        if "relationships" in json:
+            self.__set_relationships(json["relationships"])
 
         self.__set_attributes(json["attributes"])
 
     def __str__(self):
         """Returns the id and name of the route pattern"""
         return self.id + ": " + self.name
+
+    def __set_relationships(self, json):
+        """Sets each given relationship"""
+        if "route" in json:
+            self.route = json["route"]["data"]["id"]
+        if "representative_trip" in json:
+            self.representative_trip = json["representative_trip"]["data"]["id"]
 
     def __set_attributes(self, json):
         """Sets each given attribute of the route pattern"""

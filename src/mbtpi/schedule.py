@@ -31,7 +31,8 @@ class SCHEDULE(object):
         self.type = json["type"]
         self.id = json["id"]
 
-        self.__set_relationships(json["relationships"])
+        if "relationships" in json:
+            self.relationships = json["relationships"]
         self.__set_attributes(json["attributes"])
 
     def __str__(self):

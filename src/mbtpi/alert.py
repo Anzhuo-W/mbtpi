@@ -24,7 +24,7 @@ from universals import set_params, get
 
 
 class ALERT(object):
-    """Represents a MBTA alert. Takes in json with 'id', 'links', 'type' keys, and 'attributes' list"""
+    """Represents a MBTA alert. Takes in json with 'id', 'links', 'type' keys, 'relationships' and 'attributes' dict"""
 
     def __init__(self, json):
         """Stores each value returned from the MBTA API as a field"""
@@ -32,11 +32,25 @@ class ALERT(object):
         self.links = json["links"]
         self.type = json["type"]
 
+        if "relationships" in json:
+            self.__set_relationships(json["relationships"])
+
         self.__set_attributes(json["attributes"])
 
     def __str__(self):
         """Returns the id and header of the alert"""
         return self.id + ": " + self.header
+
+    def __set_relationships(self, json):
+        """Sets each given relationship"""
+        if "stops" in json:
+            self.stops = json["stops"]["data"]
+        if "routes" in json:
+            self.routes = json["routes"]["data"]
+        if "trips" in json:
+            self.trips = json["trips"]["data"]
+        if "facilities" in json:
+            self.facilities = json["facilities"]["data"]
 
     def __set_attributes(self, json):
         """Sets each given attribute of the alert"""
@@ -44,7 +58,7 @@ class ALERT(object):
         self.banner = json["banner"]
         self.cause = json["cause"]
         self.created_at = json["created_at"]
-        self.description = json["description"]
+        self.description = json["description"].strip()
         self.effect = json["effect"]
         self.header = json["header"].strip()
         self.informed_entity = json["informed_entity"]
@@ -55,6 +69,10 @@ class ALERT(object):
         self.timeframe = json["timeframe"]
         self.updated_at = json["updated_at"]
         self.url = json["url"]
+
+    def full_description(self):
+        """Returns the alert header and its description"""
+        return self.header + "\n" + self.description
 
 
 def alerts(page_offset: int = None,

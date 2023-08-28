@@ -32,7 +32,8 @@ class TRIP(object):
         self.id = json["id"]
         self.links = json["links"]
 
-        self.__set_relationships(json["relationships"])
+        if "relationships" in json:
+            self.__set_relationships(json["relationships"])
         self.__set_attributes(json["attributes"])
 
     def __str__(self):
@@ -40,16 +41,25 @@ class TRIP(object):
         return self.id + ": " + self.name + " " + self.headsign
 
     def __set_relationships(self, json):
-        if "shape" in json:
-            self.shape = json["shape"]["data"]["id"]
-        if "service" in json:
-            self.service = json["service"]["data"]["id"]
-        if "route_pattern" in json:
-            self.route_pattern = json["route_pattern"]["data"]["id"]
+        """Sets each given relationship"""
         if "route" in json:
             self.route = json["route"]["data"]["id"]
+        if "vehicle" in json:
+            self.vehicle = json["vehicle"]["data"]["id"]
+        if "service" in json:
+            self.service = json["service"]["data"]["id"]
+        if "shape" in json:
+            self.shape = json["shape"]["data"]["id"]
+        if "predictions" in json:
+            self.predictions = json["predictions"]["data"]
+        if "route_pattern" in json:
+            self.route_pattern = json["route_pattern"]["data"]["id"]
+        if "stops" in json:
+            self.stops = json["stops"]["data"]
+
+        # experimental feature
         if "occupancy" in json:
-            self.occupancy = json["occupancy"]["data"]["id"]
+            self.occupancy = json["occupancy"]["data"]
 
     def __set_attributes(self, json):
         """Sets each given attribute of the trip"""

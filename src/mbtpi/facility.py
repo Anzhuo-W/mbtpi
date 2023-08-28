@@ -24,21 +24,27 @@ from universals import set_params, get
 
 
 class FACILITY(object):
-    """Represents a MBTA facility. Takes in json with 'id', 'links', 'type', 'relationships' keys,
-    and 'attributes' list"""
+    """Represents a MBTA facility. Takes in json with 'id', 'links', 'type' keys, 'relationships' and 'attributes' dicts"""
 
     def __init__(self, json):
         """Stores each value returned from the MBTA API as a field"""
         self.id = json["id"]
         self.links = json["links"]
-        self.relationships = json["relationships"]
         self.type = json["type"]
+
+        if "relationships" in json:
+            self.__set_relationships(json["relationships"])
 
         self.__set_attributes(json["attributes"])
 
     def __str__(self):
         """Returns the id and long name of the facility"""
         return self.id + ": " + self.long_name
+
+    def __set_relationships(self, json):
+        """Sets each given relationship"""
+        if "stop" in json:
+            self.stop = json["stop"]["data"]["id"]
 
     def __set_attributes(self, json):
         """Sets each given attribute of the facility"""

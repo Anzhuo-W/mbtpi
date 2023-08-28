@@ -24,20 +24,27 @@ from universals import set_params, get
 
 
 class LIVE_FACILITY(object):
-    """Represents a MBTA live facility. Takes in json with 'id', 'links', 'type', 'relationships' keys, and 'attributes' dict"""
+    """Represents a MBTA live facility. Takes in json with 'id', 'links', 'type' keys, 'relationships' and 'attributes' dicts"""
 
     def __init__(self, json):
         """Stores each value returned from the MBTA API as a field"""
         self.type = json["type"]
-        self.relationships = json["relationships"]
         self.links = json["links"]
         self.id = json["id"]
+
+        if "relationships" in json:
+            self.__set_relationships(json["relationships"])
 
         self.__set_attributes(json["attributes"])
 
     def __str__(self):
         """Returns the id and last update time of the live facility"""
         return self.id + ": " + self.updated_at
+
+    def __set_relationships(self, json):
+        """Sets each given relationship"""
+        if "facility" in json:
+            self.facility = json["facility"]["data"]["id"]
 
     def __set_attributes(self, json):
         """Sets each given attribute of the live facility"""
