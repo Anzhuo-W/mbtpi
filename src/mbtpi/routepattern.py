@@ -1,24 +1,3 @@
-# Copyright (c) 2023 Anzhuo-W
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
-
 from urls import urls, session
 from universals import set_params, get
 
@@ -90,7 +69,9 @@ def route_patterns(page_offset: int = None,
         return route_patterns
 
 
-def route_pattern_by_id(route_pattern_id: str, fields_route_pattern: list[str] | str = None, include: list[str] = None,
+def route_pattern_by_id(route_pattern_id: str,
+                        fields_route_pattern: list[str] | str = None,
+                        include: list[str] = None,
                         json: bool = False):
     """Makes a request to the API.
     Default behavior returns a ROUTE_PATTERN object with the id given.

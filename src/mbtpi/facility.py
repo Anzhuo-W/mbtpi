@@ -1,24 +1,3 @@
-# Copyright (c) 2023 Anzhuo-W
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
-
 from urls import urls, session
 from universals import set_params, get
 
@@ -56,9 +35,14 @@ class FACILITY(object):
         self.facility_type = json["type"]
 
 
-def facilities(page_offset: int = None, page_limit: int = None, sort: str = None,
-               fields_facility: list[str] | str = None, include: list[str] = None,
-               stop: list[str] | str = None, type: list[str] | str = None, json: bool = False):
+def facilities(page_offset: int = None,
+               page_limit: int = None,
+               sort: str = None,
+               fields_facility: list[str] | str = None,
+               include: list[str] = None,
+               stop: list[str] | str = None,
+               type: list[str] | str = None,
+               json: bool = False):
     """Makes a request to the API.
     Default behavior returns unsorted list of FACILITY objects containing all facilities from API.
     Accepts all parameters that can be passed to the /facilities endpoint.
@@ -78,7 +62,9 @@ def facilities(page_offset: int = None, page_limit: int = None, sort: str = None
         return facilities
 
 
-def facility_by_id(facility_id: str, fields_facility: list[str] | str = None, include: list[str] = None,
+def facility_by_id(facility_id: str,
+                   fields_facility: list[str] | str = None,
+                   include: list[str] = None,
                    json: bool = False):
     """Makes a request to the API.
     Default behavior returns a FACILITY object with the id given.

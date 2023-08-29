@@ -1,24 +1,3 @@
-# Copyright (c) 2023 Anzhuo-W
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
-
 from urls import urls, session
 from universals import set_params, get
 
@@ -52,8 +31,12 @@ class LIVE_FACILITY(object):
         self.properties = json["properties"]
 
 
-def live_facilities(filter_id: list[str] | str, page_offset: int = None, page_limit: int = None,
-                    sort: str = None, include: str = None, json: bool = False):
+def live_facilities(filter_id: list[str] | str,
+                    page_offset: int = None,
+                    page_limit: int = None,
+                    sort: str = None,
+                    include: str = None,
+                    json: bool = False):
     """Makes a request to the API. Requires at least one filter[]. Returns live data about specific parking facilities.
     Accepts all parameters that can be passed to the /live_facilities endpoint.
 
@@ -72,7 +55,9 @@ def live_facilities(filter_id: list[str] | str, page_offset: int = None, page_li
         return live_facilities
 
 
-def live_facility_by_id(facility_id: str, include: list[str] = None, json: bool = False):
+def live_facility_by_id(facility_id: str,
+                        include: list[str] = None,
+                        json: bool = False):
     """Makes a request to the API. Returns live data about a specific parking facility.
     Default behavior returns a LIVE_FACILITY object with the facility id given.
     Accepts all parameters that can be passed to the /live_facilities/{id} endpoint.
